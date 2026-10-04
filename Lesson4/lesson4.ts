@@ -2,13 +2,15 @@
 
 import { calculatePassRate } from '../Lesson3/lesson3.js'
 
-enum TestStatus {
-    Passed = 'passed',
-    Failed = 'failed',
-    Skipped = 'skipped'
-}
+//enum TestStatus {
+//   Passed = 'passed',
+//   Failed = 'failed',
+//    Skipped = 'skipped'
+//}
 
-interface TestResult {
+type TestStatus = 'passed' | 'failed' | 'skipped'
+
+export interface TestResult {
     readonly id: number
     title: string
     status: TestStatus
@@ -21,44 +23,44 @@ interface TestSuite {
     cases: TestResult[]
 }
 
-const testRun: TestResult[] = [
+export const testRun: TestResult[] = [
     {
         id: 1,
         title: "Test Case 1",
-        status: TestStatus.Passed,
+        status: 'passed',
         durationMs: 1000
 
     },
     {
         id: 2,
         title: "Test Case 2",
-        status: TestStatus.Failed,
+        status: 'failed',
         durationMs: 2000,
         bugId: "CAR-1234"
     },
     {
         id: 3,
         title: "Test Case 3",
-        status: TestStatus.Passed,
+        status: 'passed',
         durationMs: 500
     },
     {
         id: 4,
         title: "Test Case 4",
-        status: TestStatus.Skipped,
+        status: 'skipped',
         durationMs: 0
     },
     {
         id: 5,
         title: "Test Case 5",
-        status: TestStatus.Failed,
+        status: 'failed',
         durationMs: 1500,
         bugId: "CAR-5678"
     },
     {
         id: 6,
         title: "Test Case 6",
-        status: TestStatus.Passed,
+        status: 'passed',
         durationMs: 1000
     }
 ]
@@ -67,21 +69,21 @@ const testRunSecondary: TestResult[] = [
     {
         id: 1,
         title: "Test Case 1",
-        status: TestStatus.Passed,
+        status: 'passed',
         durationMs: 1000
 
     },
     {
         id: 2,
         title: "Test Case 2",
-        status: TestStatus.Failed,
+        status: 'failed',
         durationMs: 2000,
         bugId: "CAR-1234"
     },
     {
         id: 3,
         title: "Test Case 3",
-        status: TestStatus.Passed,
+        status: 'passed',
         durationMs: 500
     },
 ]
@@ -89,7 +91,7 @@ const testRunSecondary: TestResult[] = [
 
 //task 2 - choose and summarize the test results
 function getFailedWithBugs(run: TestResult[]): TestResult[] {
-    return run.filter(test => test.status === TestStatus.Failed && test.bugId)
+    return run.filter(test => test.status === 'failed' && test.bugId)
 }
 
 console.log(getFailedWithBugs(testRun))
@@ -123,7 +125,7 @@ console.log(getTotalDurationS(testRun))
 
 function printSuiteSummary(suite: TestSuite): void {
     const testsTotal = suite.cases.length
-    const testPassed = suite.cases.filter(test => test.status === TestStatus.Passed).length
+    const testPassed = suite.cases.filter(test => test.status === 'passed').length
     const passRate = calculatePassRate(testPassed, testsTotal)
     console.log(`Test suite: ${suite.suiteName}`)
     console.log(`Total tests: ${testsTotal}`)
@@ -135,6 +137,6 @@ printSuiteSummary({suiteName: 'My Second Test Suite', cases: testRunSecondary})
 
 
 function getFailedTests(suite: TestResult[]): string[] {
-    return suite.filter(test => test.status === TestStatus.Failed).map(test => test.title)
+    return suite.filter(test => test.status === 'failed').map(test => test.title)
 }
 
